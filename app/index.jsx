@@ -1,4 +1,4 @@
-import { Text, TextInput, Linking, Pressable, View, StyleSheet, FlatList, Modal } from "react-native";
+import { Text, TextInput, Linking, Pressable, View, StyleSheet, FlatList, Modal, StatusBar } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 import { data } from '@/data/todos';
@@ -11,8 +11,10 @@ export default function Index() {
   const [text, setText] = useState('');
   const [darkMode, setDarkMode] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [editingTodo, setEditingTodo] = useState(null);
   const [editText, setEditText] = useState('');
+  const [todoToDelete, setTodoToDelete] = useState(null);
 
   const addTodo = () => {
     if (text.trim()) {
@@ -36,6 +38,19 @@ export default function Index() {
     setEditingTodo(todo);
     setEditText(todo.title);
     setModalVisible(true);
+  };
+
+  const openDeleteModal = (todo) => {
+    setTodoToDelete(todo);
+    setDeleteModalVisible(true);
+  };
+
+  const handleDeleteTodo = () => {
+    if (todoToDelete) {
+      removeTodo(todoToDelete.id);
+      setTodoToDelete(null);
+      setDeleteModalVisible(false);
+    }
   };
 
   const handleSaveEdit = () => {
@@ -67,21 +82,25 @@ export default function Index() {
       </Text>
       <Pressable 
         onPress={() => openEditModal(item)}
-        style={[styles.button, { backgroundColor: darkMode ? "#444" : "#ddd"}]}
+        style={[styles.button, { backgroundColor: "rgba(255, 165, 0, 0.3)" }]}
       >
-        <AntDesign name="edit" size={24} color={darkMode ? "white" : "black"} />
+        <AntDesign name="edit" size={24} color="rgb(255, 165, 0)" />
       </Pressable>
       <Pressable 
-        onPress={() => removeTodo(item.id)} 
-        style={[styles.button, { backgroundColor: darkMode ? "#444" : "#ddd"}]}
+        onPress={() => openDeleteModal(item)}
+        style={[styles.button, { backgroundColor: "rgba(255, 0, 0, 0.3)" }]}
       >
-        <MaterialIcons name="delete-forever" size={24} color={darkMode ? "white" : "black"} />
+        <MaterialIcons name="delete-forever" size={24} color="rgb(255, 0, 0)" />
       </Pressable>
     </View>
   );
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: darkMode ? "black" : "white" }]}>
+      <StatusBar
+        barStyle={darkMode ? "light-content" : "dark-content"}
+        backgroundColor={darkMode ? "black" : "white"}
+      />
       <View style={styles.inputContainer}>
         <TextInput
           style={[styles.input, { color: darkMode ? "white" : "black", borderColor: darkMode ? "gray" : "black" }]}
@@ -122,8 +141,14 @@ export default function Index() {
       >
         <View style={styles.modalContainer}>
           <View style={[styles.modalContent, { backgroundColor: darkMode ? "#333" : "white" }]}>
-            <Text style={[styles.modalTitle, { color: darkMode ? "white" : "black" }]}>
-              Edit this Todo
+            <AntDesign 
+              name="exclamationcircleo"
+              size={80}
+              color="rgb(255, 165, 0)"
+              style={[styles.modalIcons, { backgroundColor: darkMode ? "#333" : "white" }]}
+            />
+            <Text style={[styles.modalTitle, { color: darkMode ? "white" : "black", marginTop: 40 }]}>
+              Edit This Todo
             </Text>
             <TextInput 
               style={[styles.modalInput, { color: darkMode ? "white" : "black", borderColor: darkMode ? "gray" : "black" }]}
@@ -132,28 +157,64 @@ export default function Index() {
             />
             <View style={styles.modalButtonContainer}>
               <Pressable 
-                onPress={handleSaveEdit} 
-                style={[styles.modalButton, { backgroundColor: darkMode ? "#444" : "#ddd"}]}
+                onPress={handleSaveEdit}
+                style={[styles.modalButton, { backgroundColor: 'rgb(34, 173, 34)' }]}
               >
-                <Text style={[styles.buttonText, { color: darkMode ? "white" : "black" }]}>Save</Text>
+                <Text style={styles.buttonText}>Save</Text>
               </Pressable>
               <Pressable 
-                onPress={() => setModalVisible(false)} 
-                style={[styles.modalButton, { backgroundColor: darkMode ? "#444" : "#ddd"}]}
+                onPress={() => setModalVisible(false)}
+                style={[styles.modalButton, { backgroundColor: 'rgb(255, 0, 0)' }]}
               >
-                <Text style={[styles.buttonText, { color: darkMode ? "white" : "black" }]}>Cancel</Text>
+                <Text style={styles.buttonText}>Cancel</Text>
               </Pressable>
             </View>
           </View>
         </View>
       </Modal>
-      <View style={{padding: 10, borderTopWidth: 1, borderTopColor: darkMode ? "white" : "black" }}>
-        <Text style={{color: darkMode ? "white" : "black", display: 'flex', gap: 5, justifyContent: 'center', alignItems: 'center', textAlign: 'center'}}>
+
+      <Modal
+        visible={deleteModalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setDeleteModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={[styles.modalContent, { backgroundColor: darkMode ? "#333" : "white" }]}>
+          <Feather
+            name="x-circle"
+            size={80}
+            color="red"
+            style={[styles.modalIcons, { backgroundColor: darkMode ? "#333" : "white" }]}
+          />
+            <Text style={[styles.modalTitle, { color: darkMode ? "white" : "black", marginTop: 40 }]}>
+              Delete <Text style={{ color: 'rgb(255, 0, 0)' }}>"{todoToDelete ? todoToDelete.title : ''}"</Text> ?
+            </Text>
+            <View style={styles.modalButtonContainer}>
+              <Pressable 
+                onPress={handleDeleteTodo}
+                style={[styles.modalButton, { backgroundColor: 'rgb(255, 0, 0)' }]}
+              >
+                <Text style={styles.buttonText}>Delete</Text>
+              </Pressable>
+              <Pressable 
+                onPress={() => setDeleteModalVisible(false)}
+                style={[styles.modalButton, { backgroundColor: darkMode ? "#444" : "#a2a2a2" }]}
+              >
+                <Text style={styles.buttonText}>Cancel</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      <View style={{ padding: 10, borderTopWidth: 1, borderTopColor: darkMode ? "white" : "black", display: 'flex', gap: 5, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ color: darkMode ? "white" : "black" }}>
           Developed by Milyaz Kamil
-          <Pressable onPress={() => Linking.openURL('https://github.com')}>
-            <AntDesign name="github" size={24} color={darkMode ? "white" : "black"} />
-          </Pressable>
         </Text>
+        <Pressable onPress={() => Linking.openURL('https://github.com')}>
+          <AntDesign name="github" size={24} color={darkMode ? "white" : "black"} />
+        </Pressable>
       </View>
     </SafeAreaView>
   );
@@ -185,11 +246,12 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 5,
-    padding: 10,
+    padding: 5,
     marginHorizontal: 5,
     alignItems: 'center',
   },
   buttonText: {
+    color: 'white',
     fontSize: 18,
   },
   todoItem: {
@@ -214,6 +276,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
+    position: 'relative',
     width: '80%',
     padding: 20,
     borderRadius: 10,
@@ -241,4 +304,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     alignItems: 'center',
   },
+  modalIcons: {
+    position: 'absolute',
+    top: -60,
+    left: '50%',
+    transform: [{ translateX: -40 }],
+    padding: 20,
+    borderRadius: 100,
+  }
 });
