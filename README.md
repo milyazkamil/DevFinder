@@ -1,50 +1,53 @@
-# Welcome to your Expo app 👋
+# DevFinder
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Proje Açıklaması
 
-## Get started
+**DevFinder**, Expo ve React Native kullanılarak geliştirilen, GitHub kullanıcılarını arama, kaydetme ve istatistiklerini gösterme özelliklerine sahip bir mobil uygulamadır. Uygulama:
 
-1. Install dependencies
+* GitHub API'si üzerinden kullanıcı bilgisi çeker (profil, istatistik, konum, şirket vb.).
+* Daha önce yapılan aramaları kaydeder ve en sık yapılan ilk 5 aramayı grafiksel olarak sunar.
+* Kaydedilen kullanıcıları listeleyerek hızlı erişim sağlar.
+* Kullanıcının yıllara göre oluşturduğu repoları ya da genel kaydedilen vs. diğerleri dağılımını grafiklerle görselleştirir.
+* Açık/koyu tema desteği ile kullanıcı deneyimini özelleştirir.
+
+## Kullanılan Teknolojiler ve API
+
+* **React Native & Expo**: Mobil platformlarda hızlı geliştirme.
+* **expo-router**: Sayfa yönlendirme için.
+* **react-native-chart-kit**: Bar ve pasta grafiklerinin çizimi.
+* **AsyncStorage** (React Native) ya da hook tabanlı `useSearchHistory` ve `useSavedUsers`: Arama geçmişi ve favori kullanıcıları kalıcı saklama.
+* **GitHub REST API**: Kullanıcı verisi ve repo listesi çekme.
+* **@expo/vector-icons**: Uygulama ikonları.
+
+## Kurulum ve Çalıştırma
+
+1. Depoyu klonlayın:
+
+   ```bash
+   git clone https://github.com/milyazkamil/DevFinder.git
+   cd DevFinder
+   ```
+2. Bağımlılıkları yükleyin:
 
    ```bash
    npm install
+   # veya
+   yarn install
    ```
-
-2. Start the app
+3. Uygulamayı çalıştırın:
 
    ```bash
-    npx expo start
+   npx expo start
    ```
+4. Emulator ya da gerçek cihazda Expo Go uygulamasıyla QR kodunu tarayın.
 
-In the output, you'll find options to open the app in a
+## Uygulama Kullanımı
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+* **Arama**: Üstteki arama çubuğuna GitHub kullanıcı adı girilip onaylandığında, profil bilgisi ekrana gelir.
+* **Kaydet**: Profil kartındaki "Save" butonuna basarak kullanıcıyı favorilere ekleyebilirsiniz.
+* **Kaydedilenler**: Alt menüde "Saved" sekmesinden favori listesine erişebilirsiniz.
+* **İstatistikler**: "Statistics" sekmesinde en sık aranan 5 kullanıcı ve kaydedilen vs. diğerleri oranlarını görebilirsiniz.
+* **Tema Değiştirme**: Başlık çubuğundaki LIGHT/DARK düğmesiyle renk temasını değiştirin.
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+**Not:** Herhangi bir sorun veya soru için GitHub Issues ya da e-posta yoluyla iletişime geçebilirsiniz.
