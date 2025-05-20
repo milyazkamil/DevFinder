@@ -1,5 +1,10 @@
 # DevFinder
-![](./assets/images/1.png) ![](./assets/images/2.png) ![](./assets/images/3.png)
+<p align="center">
+  <img src="./assets/images/1.png" width="30%" />
+  <img src="./assets/images/2.png" width="30%" />
+  <img src="./assets/images/3.png" width="30%" />
+</p>
+
 ## Proje Açıklaması
 
 **DevFinder**, Expo ve React Native kullanılarak geliştirilen, GitHub kullanıcılarını arama, kaydetme ve istatistiklerini gösterme özelliklerine sahip bir mobil uygulamadır. Uygulama:
