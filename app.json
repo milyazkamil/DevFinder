@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Todo-List-React-Native",
-    "slug": "Todo-List-React-Native",
+    "name": "DevFinderV2",
+    "slug": "DevFinderV2",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "devfinderv2",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "edgeToEdgeEnabled": true
     },
     "web": {
       "bundler": "metro",

@@ -23,7 +23,7 @@ export default function Header({ darkMode, toggleTheme }) {
 }
 
 const styles = StyleSheet.create({
-  header: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: 16 },
+  header: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: 16},
   logo:   { fontSize: 24, fontWeight: "bold" },
   toggle: { flexDirection: "row", alignItems: "center" }
 });

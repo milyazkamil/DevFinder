@@ -5,46 +5,21 @@ import {
   Pressable,
   Text,
   StyleSheet,
-  ToastAndroid,
-  Platform,
-  Alert,
 } from "react-native";
-import Toast from "react-native-root-toast";
 import { useSavedUsers } from "../hooks/useSavedUsers";
-import { useRouter }     from "expo-router";
+import { useRouter } from "expo-router";
 
 export default function ProfileCard({ user, darkMode }) {
   const { addUser } = useSavedUsers();
-  const router      = useRouter();
-
-  const showQuick = (msg) => {
-    if (Platform.OS === "android") {
-      ToastAndroid.show(msg, ToastAndroid.SHORT);
-    } else {
-      Alert.alert("", msg);
-    }
-  };
+  const router = useRouter();
 
   const handleSave = () => {
     addUser(user);
-    // With react-native-root-toast:
-    Toast.show(`Saved @${user.login}!`, {
-      duration: Toast.durations.SHORT,
-      position: Toast.positions.TOP + 40,
-      shadow: true,
-      animation: true,
-    });
-    router.push(`saved`);
+    router.push("saved");
   };
 
   const handleStats = () => {
-    Toast.show(`Opening stats for @${user.login}…`, {
-      duration: Toast.durations.SHORT,
-      position: Toast.positions.TOP + 40,
-      shadow: true,
-      animation: true,
-    });
-    router.push(`stats`);
+    router.push("stats");
   };
 
   return (
@@ -159,13 +134,11 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     alignItems: "center",
-    backgroundColor: "green",
   },
   statsBtn: {
     flex: 1,
     padding: 10,
     borderRadius: 5,
     alignItems: "center",
-    backgroundColor: "#ddd",
   },
 });
